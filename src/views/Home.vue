@@ -105,7 +105,6 @@ export default {
     this.sceneBizEnding()
     this.sceneEarlyDays()
     this.sceneOcean()
-    this.sceneFloatingHead()
     this.sceneSunset()
     this.sceneArtPhiGames()
     this.sceneMario()
@@ -624,9 +623,7 @@ export default {
         .set('#biz1 .container', { autoAlpha: 0 })
         .to('.pepe-scenery', 8, { autoAlpha: 1 })
     },
-    sceneFloatingHead() {
-      this.timelines.early2.addLabel('start', 0)
-    },
+    
     sceneSunset() {
       this.timelines.early3
         .set('#Mario .container', { autoAlpha: 0 })

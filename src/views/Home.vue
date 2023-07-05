@@ -24,9 +24,6 @@
       </TitleFunction>
     </TitleSection>
 
-    <AstronotScene />
-    <GapBlock />
-
     <SuperMarioScene />
     <GapBlock />
 
@@ -51,7 +48,6 @@ import {
 import AudioMarioStart from '../components/Characters/SuperMario/assets/smw_princess_help.ogg'
 import IntroScene from '../components/Home/IntroScene.vue'
 import BizScene from '../components/Home/BizScene.vue'
-import AstronotScene from '../components/Home/AstronotScene.vue'
 import SuperMarioScene from '../components/Home/SuperMarioScene.vue'
 import GhibliScene from '../components/Home/GhibliScene.vue'
 import WrapperScene from '../components/Home/WrapperScene.vue'
@@ -65,7 +61,6 @@ export default {
   components: {
     IntroScene,
     BizScene,
-    AstronotScene,
     SuperMarioScene,
     GhibliScene,
     WrapperScene,

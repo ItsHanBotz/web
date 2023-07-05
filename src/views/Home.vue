@@ -24,6 +24,9 @@
       </TitleFunction>
     </TitleSection>
 
+    <AstronotScene />
+    <GapBlock />
+
     <SuperMarioScene />
     <GapBlock />
 
@@ -31,7 +34,7 @@
 
     <WrapperScene />
 
-    <ThanksScene :isPlayng="isPlaying.Potion" />
+    <ThanksScene :isPlaying="isPlaying.Potion" />
   </div>
 </template>
 
@@ -48,6 +51,7 @@ import {
 import AudioMarioStart from '../components/Characters/SuperMario/assets/smw_princess_help.ogg'
 import IntroScene from '../components/Home/IntroScene.vue'
 import BizScene from '../components/Home/BizScene.vue'
+import AstronotScene from '../components/Home/AstronotScene.vue'
 import SuperMarioScene from '../components/Home/SuperMarioScene.vue'
 import GhibliScene from '../components/Home/GhibliScene.vue'
 import WrapperScene from '../components/Home/WrapperScene.vue'
@@ -61,6 +65,7 @@ export default {
   components: {
     IntroScene,
     BizScene,
+    AstronotScene,
     SuperMarioScene,
     GhibliScene,
     WrapperScene,
@@ -100,6 +105,7 @@ export default {
     this.sceneOcean()
     this.sceneSunset()
     this.sceneArtPhiGames()
+    this.sceneAstronot()
     this.sceneMario()
     this.sceneGhibli()
     this.sceneWrapper()
@@ -134,6 +140,7 @@ export default {
         biz2: DOM.get('#biz2.scene'),
         biz3: DOM.get('#biz3.scene'),
         artPhiGamesTitle: DOM.get('#ArtPhiGamesTitle.scene'),
+        astronot: DOM.get('#Astronot.scene'),
         mario: DOM.get('#Mario.scene'),
         ghibli: DOM.get('#Ghibli.scene'),
         wrapper: DOM.get('#wrapperTitle.scene'),
@@ -201,24 +208,29 @@ export default {
         () => (this.isPlaying.Biz = true)
       )
       this.scrollMagicScene.biz1.on('enter', () => (this.isPlaying.Biz = true))
-      this.scrollMagicScene.biz2.on('enter', () => (this.isPlaying.Biz = true))
+      this.scrollMagicScene.biz2.on('enter',() => (this.isPlaying.Biz = true))
       this.scrollMagicScene.biz3.on('enter', () => (this.isPlaying.Biz = true))
       this.scrollMagicScene.artPhiGamesTitle.on('enter', () => {
         removeBodyClass('is-playing-mario', 'blue-background')
       })
-      this.scrollMagicScene.mario
-        .on('enter', (e) => {
-          if (isForward(e)) {
-            this.isPlaying.EarlyDays = false
-          }
-          if (isReverse(e)) {
-            addBodyClass('blue-background')
-          }
+      this.scrollMagicScene.astronot
+        .on('enter', () => {
+          this.isPlaying.Biz = false
+          this.isPlaying.Ghibli = false
+          removeBodyClass('blue-background')
         })
-        .on('leave', (e) => {
-          if (isReverse(e)) {
-            this.isPlaying.Ghibli = false
-          }
+        .on('leave', () => {
+          this.isPlaying.Ghibli = true
+          addBodyClass('blue-background')
+        })
+      this.scrollMagicScene.mario
+        .on('enter', () => {
+          removeBodyClass('blue-background')
+          addBodyClass('is-playing-mario')
+        })
+        .on('leave', () => {
+          this.isPlaying.Ghibli = false
+          removeBodyClass('is-playing-mario')
           removeBodyClass('blue-background')
         })
       this.scrollMagicScene.ghibli

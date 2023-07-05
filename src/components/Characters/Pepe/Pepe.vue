@@ -1,2 +1,3 @@
-<template>
-</template>
+.pepe {
+  display: none;
+}

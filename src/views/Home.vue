@@ -549,6 +549,7 @@ export default {
 
       // EarlyDays()
       this.timelines.earlyTitle
+        .set('.pepe-scenery', { autoAlpha: 0 })
         .set('#biz1 .container', { autoAlpha: 1 })
         .addLabel('start', 0)
         .to(
@@ -621,6 +622,7 @@ export default {
 
       this.timelines.early1
         .set('#biz1 .container', { autoAlpha: 0 })
+        .to('.pepe-scenery', 8, { autoAlpha: 1 })
     },
     sceneFloatingHead() {
       this.timelines.early2.addLabel('start', 0)
@@ -628,8 +630,8 @@ export default {
     sceneSunset() {
       this.timelines.early3
         .set('#Mario .container', { autoAlpha: 0 })
+        .to('.pepe-scenery', 8, { autoAlpha: 0 })
     },
-
     sceneArtPhiGames() {
       this.timelines.artPhiGamesTitle
         .set('#Mario .container', { autoAlpha: 0 })

@@ -12,6 +12,9 @@
     <BizScene :isPlaying="isPlaying.Biz" />
     <GapBlock />
 
+    <EarlyDaysScene :isPlaying="isPlaying.EarlyDays" />
+    <GapBlock />
+
     <TitleSection scene="ArtPhiGamesTitle">
       <TitleFunction subtitle="background.bmp">
         <span
@@ -31,7 +34,7 @@
 
     <WrapperScene />
 
-    <ThanksScene :isPlaying="isPlaying.Potion" />
+    <ThanksScene :isPlayng="isPlaying.Potion" />
   </div>
 </template>
 
@@ -48,6 +51,7 @@ import {
 import AudioMarioStart from '../components/Characters/SuperMario/assets/smw_princess_help.ogg'
 import IntroScene from '../components/Home/IntroScene.vue'
 import BizScene from '../components/Home/BizScene.vue'
+import EarlyDaysScene from '../components/Home/EarlyDaysScene.vue'
 import SuperMarioScene from '../components/Home/SuperMarioScene.vue'
 import GhibliScene from '../components/Home/GhibliScene.vue'
 import WrapperScene from '../components/Home/WrapperScene.vue'
@@ -61,6 +65,7 @@ export default {
   components: {
     IntroScene,
     BizScene,
+    EarlyDaysScene,
     SuperMarioScene,
     GhibliScene,
     WrapperScene,
@@ -78,6 +83,7 @@ export default {
       tweeners: {},
       isPlaying: {
         Biz: false,
+        EarlyDays: false,
         Ghibli: false,
         Potion: false,
       },
@@ -97,18 +103,20 @@ export default {
     this.sceneBizZen()
     this.sceneBizEverybody()
     this.sceneBizEnding()
+    this.sceneEarlyDays()
     this.sceneOcean()
+    this.sceneFloatingHead()
     this.sceneSunset()
     this.sceneArtPhiGames()
-    this.sceneAstronot()
     this.sceneMario()
     this.sceneGhibli()
     this.sceneWrapper()
   },
   beforeUnmount() {
     // loop animations
-   this.isPlaying = {
+    this.isPlaying = {
       Biz: false,
+      EarlyDays: false,
       Ghibli: false,
       Potion: false,
     }
@@ -134,10 +142,16 @@ export default {
         biz1: DOM.get('#biz1.scene'),
         biz2: DOM.get('#biz2.scene'),
         biz3: DOM.get('#biz3.scene'),
+        earlyTitle: DOM.get('#earlyTitle.scene'),
+        early1: DOM.get('#early-days.scene'),
+        early2: DOM.get('#early-days2.scene'),
+        early3: DOM.get('#early-days3.scene'),
         artPhiGamesTitle: DOM.get('#ArtPhiGamesTitle.scene'),
-        astronot: DOM.get('#Astronot.scene'),
         mario: DOM.get('#Mario.scene'),
         ghibli: DOM.get('#Ghibli.scene'),
+        ghibli2: DOM.get('#Ghibli2.scene'),
+        ghibli3: DOM.get('#Ghibli3.scene'),
+        ghibli4: DOM.get('#Ghibli4.scene'),
         wrapper: DOM.get('#wrapperTitle.scene'),
         thanks: DOM.get('#thanks.scene'),
       }
@@ -207,9 +221,11 @@ export default {
       this.scrollMagicScene.biz3.on('enter', () => (this.isPlaying.Biz = true))
       this.scrollMagicScene.earlyTitle.on('enter', () => {
         this.isPlaying.Biz = true
+        this.isPlaying.EarlyDays = true
       })
       this.scrollMagicScene.early1.on('enter', () => {
         this.isPlaying.Biz = false
+        this.isPlaying.EarlyDays = true
       })
       this.scrollMagicScene.early2.on('enter', (e) => {
         if (isReverse(e)) {
@@ -222,24 +238,19 @@ export default {
       this.scrollMagicScene.artPhiGamesTitle.on('enter', () => {
         removeBodyClass('is-playing-mario', 'blue-background')
       })
-      this.scrollMagicScene.astronot
-        .on('enter', () => {
-          this.isPlaying.Biz = false
-          this.isPlaying.Ghibli = false
-          removeBodyClass('blue-background')
-        })
-        .on('leave', () => {
-          this.isPlaying.Ghibli = true
-          addBodyClass('blue-background')
-        })
       this.scrollMagicScene.mario
-        .on('enter', () => {
-          removeBodyClass('blue-background')
-          addBodyClass('is-playing-mario')
+        .on('enter', (e) => {
+          if (isForward(e)) {
+            this.isPlaying.EarlyDays = false
+          }
+          if (isReverse(e)) {
+            addBodyClass('blue-background')
+          }
         })
-        .on('leave', () => {
-          this.isPlaying.Ghibli = false
-          removeBodyClass('is-playing-mario')
+        .on('leave', (e) => {
+          if (isReverse(e)) {
+            this.isPlaying.Ghibli = false
+          }
           removeBodyClass('blue-background')
         })
       this.scrollMagicScene.ghibli
@@ -249,12 +260,24 @@ export default {
           addBodyClass('blue-background')
         })
         .on('leave', () => removeBodyClass('blue-background'))
-      this.scrollMagicScene.wrapper
+      this.scrollMagicScene.ghibli2
         .on('enter', () => addBodyClass('blue-background'))
         .on('leave', () => removeBodyClass('blue-background'))
-      this.scrollMagicScene.thanks
+      this.scrollMagicScene.ghibli3
         .on('enter', () => addBodyClass('blue-background'))
         .on('leave', () => removeBodyClass('blue-background'))
+      this.scrollMagicScene.ghibli4
+        .on('enter', () => addBodyClass('blue-background'))
+        .on('leave', () => removeBodyClass('blue-background'))
+      this.scrollMagicScene.wrapper.on('enter', () => {
+        removeBodyClass('blue-background')
+        this.isPlaying.Ghibli = true
+        this.isPlaying.Potion = false
+      })
+      this.scrollMagicScene.thanks.on('enter', () => {
+        this.isPlaying.Ghibli = false
+        this.isPlaying.Potion = true
+      })
     },
     sceneMyCV() {
       this.timelines.myCV
@@ -526,7 +549,6 @@ export default {
 
       // EarlyDays()
       this.timelines.earlyTitle
-        .set('.pepe-scenery', { autoAlpha: 0 })
         .set('#biz1 .container', { autoAlpha: 1 })
         .addLabel('start', 0)
         .to(
@@ -599,7 +621,6 @@ export default {
 
       this.timelines.early1
         .set('#biz1 .container', { autoAlpha: 0 })
-        .to('.pepe-scenery', 8, { autoAlpha: 1 })
     },
     sceneFloatingHead() {
       this.timelines.early2.addLabel('start', 0)
@@ -607,8 +628,8 @@ export default {
     sceneSunset() {
       this.timelines.early3
         .set('#Mario .container', { autoAlpha: 0 })
-        .to('.pepe-scenery', 8, { autoAlpha: 0 })
     },
+
     sceneArtPhiGames() {
       this.timelines.artPhiGamesTitle
         .set('#Mario .container', { autoAlpha: 0 })

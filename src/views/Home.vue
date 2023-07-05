@@ -12,6 +12,9 @@
     <BizScene :isPlaying="isPlaying.Biz" />
     <GapBlock />
 
+    <EarlyDaysScene :isPlaying="isPlaying.EarlyDays" />
+    <GapBlock />
+
     <TitleSection scene="ArtPhiGamesTitle">
       <TitleFunction subtitle="background.bmp">
         <span
@@ -48,6 +51,7 @@ import {
 import AudioMarioStart from '../components/Characters/SuperMario/assets/smw_princess_help.ogg'
 import IntroScene from '../components/Home/IntroScene.vue'
 import BizScene from '../components/Home/BizScene.vue'
+import EarlyDaysScene from '../components/Home/EarlyDaysScene.vue'
 import SuperMarioScene from '../components/Home/SuperMarioScene.vue'
 import GhibliScene from '../components/Home/GhibliScene.vue'
 import WrapperScene from '../components/Home/WrapperScene.vue'
@@ -61,6 +65,7 @@ export default {
   components: {
     IntroScene,
     BizScene,
+    EarlyDaysScene,
     SuperMarioScene,
     GhibliScene,
     WrapperScene,

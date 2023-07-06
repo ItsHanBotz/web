@@ -30,10 +30,7 @@
 
         <ul>
           <li>
-            <router-link to="/" title="Home">.is()</router-link>
-          </li>
-          <li>
-            <router-link to="/about" title="About me">.about()</router-link>
+            <router-link to="/" title="Home">HanBotz{}</router-link>
           </li>
           <li>
             <a :href="`mailto:${data.email}`" title="Send me an email"

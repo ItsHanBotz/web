@@ -58,7 +58,7 @@ export default {
       this.leaveTimeline
         .clear()
         .addLabel('leave', 0)
-        .to(
+        .fromTo(
           el,
           1,
           {
@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
 // vars
 :root {
   --purple: #682ae9;

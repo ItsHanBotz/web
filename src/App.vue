@@ -1,5 +1,6 @@
 <template>
   <div id="app" :class="$route.meta.bodyClass">
+    <HeaderSection />
     <transition appear mode="out-in" :css="false" @leave="leave" @enter="enter">
       <router-view />
     </transition>
@@ -14,6 +15,7 @@
 import * as ScrollMagic from 'scrollmagic'
 import { TweenMax, TimelineMax, Power3 } from 'gsap'
 import { ScrollMagicPluginGsap } from 'scrollmagic-plugin-gsap'
+import HeaderSection from './components/HeaderSection.vue'
 import FooterSection from './components/FooterSection.vue'
 import SpineLine from './components/SpineLine.vue'
 
@@ -22,6 +24,7 @@ ScrollMagicPluginGsap(ScrollMagic, TweenMax, TimelineMax)
 export default {
   name: 'App',
   components: {
+    HeaderSection,
     SpineLine,
     FooterSection,
   },
@@ -38,6 +41,20 @@ export default {
       this.introTimeline
         .clear()
         .addLabel('enter', 0)
+        .fromTo(
+          '.header-breadcrumb',
+          1,
+          {
+            autoAlpha: 0,
+            x: -32,
+          },
+          {
+            autoAlpha: 1,
+            x: 0,
+            ease: Power3.easeOut,
+          },
+          'enter'
+        )
         .fromTo(
           el,
           1,
@@ -58,7 +75,8 @@ export default {
       this.leaveTimeline
         .clear()
         .addLabel('leave', 0)
-        .fromTo(
+        .set('.header-breadcrumb', { autoAlpha: 0 }, 'leave')
+        .to(
           el,
           1,
           {
@@ -134,7 +152,7 @@ body {
   z-index: 1;
   padding-bottom: 20vh;
   min-height: 100vh;
-  transition: opacity 0.5s linear```
+  transition: opacity 0.5s linear;
 
   &:after {
     content: '';
@@ -301,7 +319,8 @@ body {
 
 // NProgress custom CSS
 #nprogress {
-  pointer-events: none```
+  pointer-events: none;
+
   .bar {
     background: var(--purple);
     position: fixed;
